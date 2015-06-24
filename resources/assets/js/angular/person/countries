@@ -1,0 +1,36 @@
+angular.module('teste', ["angucomplete-alt"])
+.service('Countries', function ($http) {
+  var queries = [];
+	
+	return {
+		filter: function (q) {
+			var query = queryWith(q);
+			
+			return $http({
+				url: '/endpoint?q=' + query,
+				cache: true
+			});
+		}
+	};
+	
+	function queryWith(query) {
+		for (var i = 0, len = queries.length; i < len; i++) {
+			if (query.lastIndexOf(queries[i], 0) === 0) {
+			  return queries[i];
+			}
+		}
+		queries.push(query);
+		
+		return query;
+	}
+})
+.controller('SomeCtrl', function ($scope, Countries) {
+  
+  $scope.countries = [];
+  
+  $scope.queryHandler = function (q) {
+		Countries.filter(q).success(function (response) {
+			$scope.countries = response;
+		});
+	};
+});

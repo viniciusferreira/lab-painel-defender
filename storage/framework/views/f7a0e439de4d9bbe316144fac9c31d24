@@ -1,0 +1,126 @@
+<div class="modal fade" id="modelAccountDetails" tabindex="-1" role="dialog" aria-labelledby="modelAccountDetails" aria-hidden="true" name="modelAccountDetails">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+					<h4 class="modal-title">Detalhes da conta: #ref:{{view.idConta}}</h4>
+				</div>
+				<div class="modal-body">
+					<div>
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-4">
+										Parceiro
+									</div>
+									<div class="col-sm-8">
+									{{view.parceiro.Nome}} #ref:{{view.idParceiro}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										OS
+									</div>
+									<div class="col-sm-8">
+									{{view.idOS}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Plano de conta
+									</div>
+									<div class="col-sm-8">
+									{{view.plano_conta.Descricao}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Centro de custo
+									</div>
+									<div class="col-sm-8">
+									{{view.centro_custo.Descricao}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Referente
+									</div>
+									<div class="col-sm-8">
+										<pre>{{view.Referente}}</pre>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Data Documento
+									</div>
+									<div class="col-sm-8">
+									{{view.DataDocumento | dateTimeMysqlToBR | removeTime}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Data Vencimento
+									</div>
+									<div class="col-sm-8">
+										 {{view.DataVencimento | dateTimeMysqlToBR | removeTime}}
+										</div>
+									</div>
+								<div class="row">
+									<div class="col-sm-3">
+										Valor
+									</div>
+									<div class="col-sm-3 text-right">
+										R$ {{view.Valor | comma2decimal}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										Acréscimo
+									</div>
+									<div class="col-sm-3 text-right">
+										R$  {{view.Acrescimo | comma2decimal}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										Juros
+									</div>
+									<div class="col-sm-3 text-right">
+										R$  {{view.Juros | comma2decimal}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										Multa
+									</div>
+									<div class="col-sm-3 text-right">
+										R$  {{view.Multa | comma2decimal}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										Desconto
+									</div>
+									<div class="col-sm-3 text-right">
+										R$ {{view.Desconto | comma2decimal}}
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<blockquote><strong>Total a pagar</strong></blockquote>
+								</div>
+								<div class="col-sm-6">
+									<blockquote><strong>R$ {{view.total | comma2decimal}}</strong></blockquote>
+								</div>
+							</div>
+						</div>
+					</div>
+			        <div class="modal-footer">
+						<div class="row">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,254 @@
+<?php $__env->startSection('content'); ?>
+<script>
+	var _urlComplete="<?php echo e(preg_replace('#^https?://([^/])+#', '',route('os.complete',''))); ?>";
+	var _os=<?php if (isset($os[0])) echo $os->toJson(); else echo '[]'; ?>;
+</script>
+<div id="result"></div>
+<div class="container-fluid hidden startHidden" ng-controller="appOSController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">OS não concluídas</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-2">
+							<select ng-model="qtdPage" name="quantidade" class="form-control" ng-change="filterPage('<?php echo e(route('os.uncompleted')); ?>',qtdPage)">
+								<optgroup label="Registros por página"></optgroup>
+								<option value="10">10 registros por página</option>
+								<option value="30">30 registros por página</option>
+								<option value="50">50 registros por página</option>
+								<option value="100">100 registros por página</option>
+								<option value="500">500 registros por página</option>
+								<option value="1000">1000 registros por página</option>
+							</select>
+						</div>
+						<div class="col-sm-2">
+							<button type="button" class="btn btn-primary" ng-click="concluir('all')">Concluir todas OS selecionadas</button>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">OS:</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-2">
+								<input type="text" placeholder="Filtrar por Cliente" ng-model="os.parceiro.Nome" class="form-control">
+							</div>
+							<div class="col-sm-4">
+								<div class="col-sm-6">
+									<input type="text" placeholder="Data dd/mm/aaaa" ng-model="data" class="form-control" ng-change="dataOSChange(data)">
+								</div>
+								<div class="col-sm-6">
+									<input type="text" placeholder="Prev. dd/mm/aaaa" ng-model="dataprevisao" class="form-control" ng-change="dataOSPrevistaChange(dataprevisao)">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<input type="text" placeholder="OS inicial ex: 1" ng-model="valueMin" class="form-control">
+							</div>
+							<div class="col-sm-2">
+								<input type="text" placeholder="OS final ex: 100" ng-model="valueMax" class="form-control" ng-change="valueMaxChange(valueMax)">
+							</div>
+							<div class="col-sm-2">
+								<div ng-hide="true">Ocultando: {{_to-_from-resultOS.length+1}}</div>
+								Result. filtro: {{resultOS.length}}<br>
+								{{_from}} a {{_to}} de {{_total}}<br>
+								Página {{_current_page}} de {{_last_page}}
+							</div>
+						</div>
+						<div class="row bg-success">
+							<div class="col-sm-2">
+								<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /> Selecionar tudo
+							</div>
+							<div class="col-sm-6">
+								<input type="checkbox" ng-model="keepSelected" /> Manter itens selecionados quando usar filtrar
+							</div>
+						</div>
+						<div class="row bg-info">
+							<div class="col-sm-1"><a href ng-click="order('os')">OS</a></div>
+							<div class="col-sm-5"><a href ng-click="order('parceiro.Nome')">Cliente</a></div>
+							<div class="col-sm-2"><a href ng-click="order('Data')">Data</a></div>
+							<div class="col-sm-2"><a href ng-click="order('DataPrevista')">Data prevista</a></div>
+						</div>
+						<div ng-class-odd="'gridPar'" ng-class-even="'gridImpar'" ng-repeat="os in listOS | filter:osRange | filter:os as resultOS">
+							<div class="row">
+								<div class="col-sm-1"><input type="checkbox" value="||os.idOS||" ng-model='os.selected' />
+									{{os.idOS}}
+								</div>
+								<div class="col-sm-5">
+									<a href="<?php echo e(route('person.show','')); ?>/{{os.idParceiro}}">{{os.parceiro.Nome}}</a>
+								</div>
+								<div class="col-sm-2">
+									{{os.Data | MysqlToDateBR}} - {{os.Hora}}
+								</div>
+								<div class="col-sm-2">
+									{{os.DataPrevista | MysqlToDateBR}} - {{os.HoraPrevista}}
+								</div>
+								<div class="col-sm-1">
+									<a href ng-click="detalheOS(os)" class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelDetalheOS">Detalhe</a>
+								</div>
+								<div class="col-sm-1">
+									<a href ng-click="concluir(os)" class="btn btn-xs btn-success">Concluir</a>
+								</div>
+							</div>
+							<div class="col-sm-12"></div>
+							<div class="col-sm-12"></div>
+						</div>
+						<div class="row bg-success">
+							<div class="col-sm-2">
+								<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /> Selecionar tudo
+							</div>
+							<div class="col-sm-6">
+								<input type="checkbox" ng-model="keepSelected" /> Manter itens selecionados quando usar filtrar
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 text-center"><?php if (isset($os[0])) echo $os->appends(['total' => $total])->render(); ?></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modelDetalheOS" tabindex="-1" role="dialog" aria-labelledby="modelDetalheOS" aria-hidden="true" name="modelDetalheOS">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+					<h4 class="modal-title">Detalhes da OS: #ref:{{view.idOS}}</h4>
+				</div>
+				<div class="modal-body">
+					<div id="detalheConta">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-4">
+										Parceiro
+									</div>
+									<div class="col-sm-8">
+										{{view.parceiro.Nome}} #ref:{{view.idParceiro||
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Contato
+									</div>
+									<div class="col-sm-8">
+										@{{view.Contato}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Fone
+									</div>
+									<div class="col-sm-8">
+										{{view.Fone}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Endereço
+									</div>
+									<div class="col-sm-8">
+										{{view.Endereco}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Forma de pagamento
+									</div>
+									<div class="col-sm-8">
+										{{view.forma_pagamento.Nome}} - A vista? {{view.forma_pagamento.aVista}} #ref:{{view.idFormaPagamento}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Data/Hora
+									</div>
+									<div class="col-sm-8">
+										{{view.Data | dateMysqlToBR}} - {{view.Hora}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Data/Hora Prevista
+									</div>
+									<div class="col-sm-8">
+										{{view.DataPrevista | dateMysqlToBR}} - {{view.HoraPrevista}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Usuário
+									</div>
+									<div class="col-sm-8">
+										{{view.usuario.Usuario}} - {{view.usuario.parceiro.Nome}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Vendedor
+									</div>
+									<div class="col-sm-8">
+										{{view.vendedor.Usuario}} - {{view.vendedor.parceiro.Nome}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Arte Finalista
+									</div>
+									<div class="col-sm-8">
+										{{view.arte_finalista.Usuario}} - {{view.arte_finalista.parceiro.Nome}}
+									</div>
+								</div>
+								<div ng-repeat="(key,tipo) in view.tipo_servico">
+									<div class="row" ng-repeat="servico in tipo.tipo_servico">
+										<div class="col-sm-4">
+											<div ng-hide="key>0">Serviço(s)</div>
+										</div>
+										<div class="col-sm-8">
+											{{servico.Nome}}
+										</div>
+									</div>
+								</div>
+								<div ng-repeat="(key,prod) in view.produto">
+									<div class="row" ng-repeat="produto in prod.produto">
+										<div class="col-sm-4">
+											<div ng-hide="key>0">Produto(s)</div>
+										</div>
+										<div class="col-sm-8">
+											{{produto.Nome}} - {{prod.Descricao}}
+										</div>
+									</div>
+								</div>
+								<div class="row" ng-repeat="conta in view.conta">
+									<div class="col-sm-4">
+										Conta
+									</div>
+									<div class="col-sm-8">
+										id: {{conta.idConta}} - Valor: R$ {{conta.Valor | comma2decimal}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4">
+										Observações
+									</div>
+									<div class="col-sm-8">
+										{{view.Obs1}}<br>
+										{{view.Obs2}}<br>
+										{{view.Obs3}}<br>
+										{{view.Obs4}}<br>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			        <div class="modal-footer">
+						<div class="row">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

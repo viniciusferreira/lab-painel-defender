@@ -1,0 +1,351 @@
+<?php $__env->startSection('content'); ?>
+<script>
+	_token='<?php echo e(csrf_token()); ?>';
+	_person=<?php echo $parceiro->toJson(); ?>;
+</script>
+<div id="result"></div>
+<div class="tabbable" ng-controller="appPersonController">
+	<div class="container-fluid hidden startHidden">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading"><section id="addPerson">Cadastro de Pessoas</section></div>
+				<div class="panel-body">
+					<form ng-submit="save(person)">
+					<input type="hidden" ng-model="person.idParceiro">
+					<!-- Multiple Radios (inline) -->
+					<div class="row">
+						<label class="col-md-1 control-label" for="person.Pessoa_Fisica" ng-hide="person.idParceiro">Pessoa</label>
+						<div class="col-md-2" ng-hide="person.idParceiro">
+							<label class="radio-inline">
+							  <input type="radio" value="1" ng-model="person.Pessoa_Fisica">
+							  Jurídica
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" value="2" ng-model="person.Pessoa_Fisica">
+							  Física
+							</label>
+						</div>
+						<label class="col-md-1 control-label" for="person.Correntista">Correntista</label>
+						<div class="col-md-2">
+							<label class="radio-inline">
+							  <input type="radio" value="Sim" ng-model="person.Correntista">
+							  Sim
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" value="Nao" ng-model="person.Correntista">
+							  Não
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-md-1 control-label" for="person.type">Tipos</label>
+						<div class="col-md-2" ng-show="person.Pessoa_Fisica=='2'">
+						  <input type="checkbox" id="arte_finalista_check" value="1" ng-model="person.arte_finalista_check" ng-checked="(person.arte_finalista!=null)">
+						  Arte finalista
+						</div>
+						<div class="col-md-2">
+						  <input type="checkbox" id="cliente_check" ng-model="person.cliente_check" ng-checked="(person.cliente!=null)">
+						  Cliente
+						</div>
+						<div class="col-md-2" ng-show="person.Pessoa_Fisica=='2'">
+						  <input type="checkbox" id="agenda_parceiro_check" ng-model="person.agenda_parceiro_check" ng-checked="(person.agenda_parceiro!=null)">
+						  Contato
+						</div>
+						<div class="col-md-2" ng-show="person.Pessoa_Fisica=='2'">
+						  <input type="checkbox" id="familiar_check" ng-model="person.familiar_check" ng-checked="(person.familiar!=null)">
+						  Familiar
+						</div>
+						<div class="col-md-2">
+						  <input type="checkbox" id="fabricante_check" ng-model="person.fabricante_check" ng-checked="(person.fabricante!=null)">
+						  Fabricante
+						</div>
+						<div class="col-md-2">
+						  <input type="checkbox" id="fornecedor_check" ng-model="person.fornecedor_check" ng-checked="(person.fornecedor!=null)">
+						  Fornecedor
+						</div>
+						<div class="col-md-2" ng-show="person.Pessoa_Fisica=='2'">
+						  <input type="checkbox" id="funcionario_check" ng-model="person.funcionario_check" ng-checked="(person.funcionario!=null)">
+						  Funcionário
+						</div>
+						<div class="col-md-2" ng-show="person.Pessoa_Fisica=='2'">
+						  <input type="checkbox" id="usuario_sistema_check" ng-model="person.usuario_sistema_check" ng-checked="(person.usuario_sistema!=null)">
+						  Usuário do sistema
+						</div>
+						<div class="col-md-2" ng-show="person.Pessoa_Fisica=='2'">
+						  <input type="checkbox" id="vendedor_check" ng-model="person.vendedor_check" ng-checked="(person.vendedor!=null)">
+						  Vendedor
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="row">
+						<label class="col-md-2 control-label" for="Nome">Nome</label>
+						<div class="col-md-4">
+							<input id="nome" name="nome" ng-model="person.Nome" type="text" placeholder="Nome" class="form-control input-md" required="" minlength="2" maxlength="45">
+							<span class="help-block">* obrigatório</span>
+						</div>
+						<div ng-show="person.Pessoa_Fisica=='1'">
+						  <label class="col-md-1 control-label" for="person.empresa.CNPJ">CNPJ</label>
+						  <div class="col-md-4">
+						  	<input id="person.empresa.CNPJ" ng-model="person.empresa.CNPJ" type="text" placeholder="CNPJ" class="form-control input-md" ng-required="person.Pessoa_Fisica=='1'" minlength="14" maxlength="14">
+						 	 <span class="help-block">* obrigatório</span>
+							</div>
+						</div>
+						<div ng-show="person.Pessoa_Fisica=='2'">
+							<label class="col-md-1 control-label" for="person.individuo.CPF">CPF</label>
+							<div class="col-md-4">
+								<input id="person.individuo.CPF" ng-model="person.individuo.CPF" type="text" placeholder="CPF" class="form-control input-md" ng-required="person.Pessoa_Fisica=='2'" minlength="11" maxlength="11">
+								<span class="help-block">* obrigatório</span>
+							</div>
+						</div>
+					</div>
+					<div class="row" ng-show="person.Pessoa_Fisica=='1'">
+						<label class="col-md-2 control-label" for="person.empresa.Razao_Social">Razão Social</label>
+						<div class="col-md-4">
+							<input id="person.empresa.Razao_Social" ng-model="person.empresa.Razao_Social" type="text" placeholder="Razão Social" class="form-control input-md" ng-required="person.Pessoa_Fisica=='1'" minlength="2" maxlength="45">
+							<span class="help-block">* obrigatório</span>
+						</div>
+					 	 <label class="col-md-1 control-label" for="person.empresa.Inscricao_Estadual">Inscrição Estadual</label>
+					 	 <div class="col-md-4">
+					  		<input id="person.empresa.Inscricao_Estadual" ng-model="person.empresa.Inscricao_Estadual" type="text" placeholder="Inscrição Estadual" class="form-control input-md" ng-required="person.Pessoa_Fisica=='1'">
+					  		<span class="help-block">* obrigatório</span>
+						</div>
+					</div>
+					<div class="row" ng-show="person.Pessoa_Fisica=='1'">
+						<div class="col-md-2">Responsável</div>
+						<div class="col-md-4" ng-show="selectedResponsavel.title==null">
+							<div angucomplete-alt id="idResponsavel" placeholder="Informe o responsável" maxlength="45" pause="10" selected-object="selectedResponsavel" local-data="responsaveis" search-fields="Nome" title-field="Nome" minlength="1" input-class="form-control form-control-small" match-class="highlight" input-changed="queryHandler" ng-model="textResponsavel"></div>
+						</div>
+						<div class="col-md-4" ng-show="selectedResponsavel.title!=null">{{selectedResponsavel.title}}</div>
+						<div class="col-md-2" ng-show="selectedResponsavel.title!=null"><button type="button" class="btn btn-info" ng-click="changeResponsavel()">Trocar</button></div>
+					</div>
+					<div class="12">
+					<div class="row" ng-show="person.Pessoa_Fisica=='1'">
+						<label class="col-md-2 control-label" for="person.empresa.CodTributario">Código Tributário</label>
+						<div class="col-md-4">
+							<input id="person.empresa.CodTributario" ng-model="person.empresa.CodTributario" type="text" placeholder="Código Tributário" class="form-control input-md" minlength="2" maxlength="45">
+							<span class="help-block"></span>
+						</div>
+					</div>
+					<!-- Text input-->
+					<div class="row" ng-show="person.Pessoa_Fisica=='2'">
+					  <label class="col-md-2 control-label" for="person.individuo.RG">RG</label>
+					  <div class="col-md-4">
+					  	<input id="person.individuo.RG" ng-model="person.individuo.RG" type="text" placeholder="RG" class="form-control input-md">
+					  	<span class="help-block"></span>
+					  </div>
+					  <label class="col-md-1 control-label" for="person.individuo.Sexo">Sexo</label>
+						<div class="col-md-1">
+							<label class="radio-inline">
+							  <input type="radio" value="m" ng-model="person.individuo.Sexo">
+							  Masculino
+							</label><br>
+							<label class="radio-inline">
+							  <input type="radio" value="f" ng-model="person.individuo.Sexo">
+							  Feminino
+							</label>
+						</div>
+						<label class="col-md-1 control-label" for="person.individuo.Data_Nascimento">Data Nascimento</label>
+						<div class="col-md-2">
+							<input id="person.individuo.Data_Nascimento" ng-model="person.individuo.Data_Nascimento" type="text" placeholder="Data de Nascimento" class="form-control input-md" minlength="10" maxlength="10">
+					  		<span class="help-block"></span>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Endereço</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="inputCep">CEP</label>
+										<input type="text" class="form-control" id="inputCep" ng-model="person.Cep" ng-change="cep(person.Cep)" minlength="8" maxlength="9" placeholder="00000-000">
+									</div>
+								</div>
+								<div class="col-md-9"></div>
+							</div>
+							<p class="text-danger" ng-show="person.endNotFound"><strong>Endereço não localizado</strong>. Por gentileza entre manualmente!</p>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group">
+										<label for="inputLogradouro">Logradouro</label>
+										<input type="text" class="form-control" id="inputLogradouro" ng-model="person.Endereco">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="inputNumero">Número</label>
+										<input type="text" class="form-control" id="inputNumero" ng-model="person.Numero">
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<label for="inputComplemento">Complemento</label>
+										<input type="text" class="form-control" id="inputComplemento" ng-model="person.Complemento">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group">
+										<label for="inputBairro">Bairro</label>
+										<input type="text" class="form-control" id="inputBairro" ng-model="person.Bairro">
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<label for="inputCidade">Cidade</label>
+										<input type="text" class="form-control" id="inputCidade" ng-model="person.Cidade">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="inputEstado">Estado</label>
+											<input type="text" class="form-control" id="inputEstado" ng-model="person.Estado">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Informações de Contato</div>
+						<div class="panel-body">
+							<div class="row" ng-show="person.Pessoa_Fisica=='1'">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Nome</label>
+										<input type="text" class="form-control" ng-model="person.empresa.Contato" minlength="2" maxlength="45">
+									</div>
+								</div>
+								<div class="col-md-9"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<div class="form-group">
+										<label>Telefone 1</label>
+										<input type="text" class="form-control" ng-model="person.Telefone1" maxlength="14">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Telefone 2</label>
+											<input type="text" class="form-control" ng-model="person.Telefone2" maxlength="14">
+									</div>
+								</div>
+								<div class="col-md-5" ng-show="person.Pessoa_Fisica=='1'">
+									<div class="form-group">
+										<label>Fax</label>
+										<input type="text" class="form-control" ng-model="person.empresa.Fax" maxlength="14">
+									</div>
+								</div>
+								<div class="col-md-5" ng-show="person.Pessoa_Fisica=='2'">
+									<div class="form-group">
+										<label>Celular</label>
+										<input type="text" class="form-control" ng-model="person.individuo.Celular" maxlength="14">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>E-mail</label>
+										<input type="text" class="form-control" ng-model="person.Email" maxlength="100">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Website</label>
+										<input type="text" class="form-control" ng-model="person.empresa.WebSite" maxlength="70">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">Observações</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Descrever comissão se houver</label>
+										<input type="text" class="form-control" ng-model="person.Comissao">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Como nos conheceu</label>
+										<textarea class="form-control" ng-model="person.Conheceu" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observação</label>
+										<textarea class="form-control" ng-model="person.Obs" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					</div>
+					<!-- Button -->
+					<div class="row">
+					  <div class="col-md-12 text-center">
+					    <button name="save" class="btn btn-primary">Salvar</button>
+					  </div>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Pessoas</div>
+				<div class="panel-body">
+					<div class="col-md-12">
+						<div class="col-sm-3">
+							<select ng-model="qtdPage" name="quantidade" class="form-control" ng-change="filterPage('<?php echo e(route('person.index')); ?>',qtdPage)">
+								<optgroup label="Registros por página"></optgroup>
+								<option value="10">10 registros por página</option>
+								<option value="30">30 registros por página</option>
+								<option value="50">50 registros por página</option>
+								<option value="100">100 registros por página</option>
+								<option value="500">500 registros por página</option>
+								<option value="1000">1000 registros por página</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4"><a href ng-click="order('Nome')">Name</a></div>
+						<div class="col-sm-1"><a href ng-click="order('Pessoa_Fisica')">Pessoa</a></div>
+						<div class="col-sm-3"><a href ng-click="order('cnpjcpf')">CNPJ/CPF</a></div>
+						<div class="col-sm-2"><a href ng-click="order('rgie')">I.E./R.G.</a></div>
+						<div class="col-sm-2">Ações</div>
+					</div>
+					<div ng-class-odd="'gridPar'" ng-class-even="'gridImpar'" ng-repeat="person in listPerson">
+							<div class="col-md-4">{{person.Nome}}</div>
+							<div class="col-md-1">{{person.Pessoa_Fisica | person}}</div>
+							<div class="col-md-3">{{person.cnpjcpf}}</div>
+							<div class="col-md-2">{{person.rgie}}</div>
+							<div class="col-md-2">
+								<a href ng-click="delails(person)" class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelPersonDetalhe">Detalhe</a>
+								<button class="btn btn-xs btn-success" ng-click="edit(person)">Editar</button>
+								<button class="btn btn-xs btn-danger" ng-click="del(person)">Excluir</button>
+							</div>
+						</div>
+						<div class="col-md-12"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 text-center"><?php echo $parceiro->appends(['total' => $total])->render(); ?>
+
+			</div>
+		</div>
+	</div>
+	<?php echo $__env->make("person::details", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</div>
+<script src="<?php echo e(url('js')); ?>/vue/bower_components/jQuery-Mask-Plugin/dist/jquery.mask.js"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
