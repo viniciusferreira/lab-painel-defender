@@ -4,7 +4,7 @@ Uma ideia de como seria.
 
 ### Screenshot
 
-[![Build Status](https://raw.githubusercontent.com/emtudo/lab-painel-defender/screenshot.png)](https://raw.githubusercontent.com/emtudo/lab-painel-defender/screenshot.png)
+[![Build Status](https://github.com/emtudo/lab-painel-defender/blob/master/screenshot.png)](https://github.com/emtudo/lab-painel-defender/blob/master/screenshot.png)
 
 ## Meu primeiro código compartilhado
 
