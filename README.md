@@ -2,6 +2,10 @@
 
 Uma ideia de como seria.
 
+### Screenshot
+
+[![Build Status](https://raw.githubusercontent.com/emtudo/screenshot.png)](https://raw.githubusercontent.com/emtudo/screenshot.png)
+
 ## Meu primeiro código compartilhado
 
 Vamos ver se presta ;)
