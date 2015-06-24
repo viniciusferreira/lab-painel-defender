@@ -27,3 +27,5 @@ Pronto! Poderá ver o a ideia.
 O middleware VerifyCsrfToken está desativado, eu não testei, porém acredito que se ativá-lo tudo irá funcionar corretamente.
 
 Tem vários lixos na aplicação, pois fiz um exugamento rápido de um projeto que estou utilizando.
+
+O camarada que vai dá acesso a alguma permissão ou role, ele precisa ter permissão para a permissão que ele mesmo quer setar para outro, e mesmo que ele não tenha permissão em um grupo por exemplo "Financeiro", porém tem permissão ao grupo "Acesso total  ao sistema" e este "Acesso total ao sistema"  tem todas as permissões que tem no "Financeiro" ele poderá dá acesso ao financeiro então.
