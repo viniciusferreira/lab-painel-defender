@@ -11,11 +11,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-    	ResultSystems\Emtudo\Permission\Models\Roles::insert([
+		$date=\Carbon\Carbon::now()->toDateTimeString();
+    	ResultSystems\Emtudo\User\Models\User::insert([
     			[
     			'name'=>'Administrador do Sistema',
     			'email'=>'admin@resultsystems.com',
-    			'password'=>bcrypt('resultsystems')
+    			'password'=>bcrypt('admin'),
+    			'created_at'=>$date,
+    			'updated_at'=>$date],
+    			[
+    			'name'=>'Usuário restrito',
+    			'email'=>'user@resultsystems.com',
+    			'password'=>bcrypt('user'),
     			'created_at'=>$date,
     			'updated_at'=>$date],
    			]

@@ -14,7 +14,6 @@ class CreateDefenderRolesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('readable_name')->index();
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(base_path('app/Admin/Permission/Resources/views'), 'permission');
+        $this->loadViewsFrom(base_path('app/Person/Resources/views'), 'person');
         $this->loadViewsFrom(base_path('resources/views/auth'), 'auth');
         $this->loadViewsFrom(base_path('resources/views/admin'), 'admin');
     }

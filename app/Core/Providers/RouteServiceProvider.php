@@ -5,6 +5,7 @@ namespace ResultSystems\Emtudo\Core\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Config;
+use ResultSystems\Emtudo\User\Models\User;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        $router->pattern('user', '[0-9]+');
+        $router->bind('user', function($value) {
+            return User::limit(1)
+                ->first();
+        });
         parent::boot($router);
     }
 

@@ -1,4 +1,4 @@
-var _urlBase='/wcli/';
+var _urlBase='/';
 var app = angular.module('app', ['angucomplete-alt']);
 
 app.controller('geralController', ['$scope', function(scope) {

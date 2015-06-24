@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'https://emtudo.com/wcli/index.php',
+    'url' => 'https://dominio.com/',
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', '7qOKKXAsOHs56t5lsp90c5CKIvGFTByV'),
+    'key' => env('APP_KEY', 'MBKmJGmGo9O0am7xqjm6bS3xJlKRUSNI'),
 
     'cipher' => 'AES-256-CBC',
 

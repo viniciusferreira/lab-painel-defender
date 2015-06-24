@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
             # code...
         }
 
+        $this->call('UsersTableSeeder');
         $this->call('RolesTableSeeder');
         $this->call('PermissionsTableSeeder');
-        $this->call('UsersTableSeeder');
 //user@resultsystems.com
 //        $this->call('TestesTableSeeder');
 

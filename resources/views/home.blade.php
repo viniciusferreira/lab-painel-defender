@@ -9,7 +9,10 @@
 
 				<div class="panel-body">
 					Usuário padrão com acesso total: admin@resultsystems.com<br>
-					senha: resultsystems<br>
+					senha: admin<br><br>
+					Usuário restrito: user@resultsystems.com<br>
+					senha: user<br>
+					<br>Você pode criar novos usuários<br>
 				</div>
 			</div>
 		</div>

@@ -17,35 +17,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var string
 	 */
-	protected $table="usuarios";
-	protected $primaryKey='Id';
 
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['Usuario', 'password'];
+	protected $fillable = ['password'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['Senha', 'password'];
-	public $with=['parceiro'];
-	public function parceiro() {
-    	return $this->hasOne('ResultSystems\Emtudo\Person\Models\Person','idParceiro','Id_Contato');
-	}
-	public function contato() {
-    	return $this->hasOne('ResultSystems\Emtudo\Person\Models\Person','idParceiro','Id_Contato')
-			->with(['individuo','ramoAtividade','usuarioSistema','agendaParceiro','cliente','fornecedor','funcionario','arteFinalista','vendedor','familiar','fabricante']);
-	}
+	protected $hidden = ['password'];
 	public function permissions() {
-    	return $this->hasMany('ResultSystems\Emtudo\Admin\Permission\Models\PermissionUser','user_id','Id');
+	    	return $this->hasMany('ResultSystems\Emtudo\Admin\Permission\Models\PermissionUser','user_id','Id');
 	}
 	public function sessions() {
-    	return $this->hasMany('ResultSystems\Emtudo\Admin\Permission\Models\RoleUser','user_id','Id');
+	    	return $this->hasMany('ResultSystems\Emtudo\Admin\Permission\Models\RoleUser','user_id','Id');
 	}
 
 }

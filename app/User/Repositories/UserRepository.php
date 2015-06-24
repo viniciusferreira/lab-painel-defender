@@ -23,10 +23,7 @@ class UserRepository implements iUserRepository {
 	 */
 	public function index()
 	{
-		$user=$this->user->where('Ativo',1)
-			->with('contato')
-			->orderby('Usuario')
-			->get();
+		$user=$this->user->get();
 		return $user;
 	}
 	public function store($request)

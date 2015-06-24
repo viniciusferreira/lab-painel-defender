@@ -15,8 +15,7 @@ class Application extends LaravelApplication
     public function environmentFile()
     {
         if($this->runningInConsole() or $this->isDevEnvironment()){
-            //exit('sim estamos local ou no host');
-            return "env-digipress";
+            return ".env";
         }
 
         return $this->environmentFile ?: '.env';
@@ -30,8 +29,7 @@ class Application extends LaravelApplication
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        $myIP = @gethostbyname('notebook.dlocal.in');
-        $myIP = '216.59.16.37';
-        return in_array($ip, [$myIP, '216.59.16.37', '216.59.16.38']);
+        $myIP = @gethostbyname('dominio.com');
+        return in_array($ip, [$myIP, '127.0.0.7']);
     }
 }

@@ -54,7 +54,7 @@ app.controller('appPermissionController', ['$scope', '$http', '$filter', functio
 				scope.checkAllSession();
 			    angular.forEach(data, function (i) {
 				    angular.forEach(scope.listUser, function (item) {
-				    	if (i==item.Id) {
+				    	if (i==item.id) {
 					  		var index = scope.listUser.indexOf(item);
 					  		scope.listUser.splice(index,1);
 				    	}
@@ -78,7 +78,7 @@ app.controller('appPermissionController', ['$scope', '$http', '$filter', functio
 		usersIds=[];
 	    angular.forEach(scope.listUser, function (item) {
 	    	if (item.selected) {
-    			usersIds.push(item.Id);
+    			usersIds.push(item.id);
 	    	}
 	    });
 		if (!usersIds[0]) {

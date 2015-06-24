@@ -44,12 +44,6 @@ class Handler extends ExceptionHandler
         }
         else
         {
-            if (isset($_SERVER['REMOTE_ADDR'])) {
-                $myIP = @gethostbyname('notebook.dlocal.in');
-                if ($_SERVER['REMOTE_ADDR']==$myIP) {
-                    return parent::render($request, $e);
-                }
-            }
             if (getenv('APP_ENV')=='local')
                 return parent::render($request, $e);
             else {

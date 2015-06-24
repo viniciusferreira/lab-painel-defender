@@ -27,7 +27,6 @@ elixir(function(mix) {
        "bower_components/jquery/dist/jquery.js", //2.1.4
        "bower_components/jQuery-Mask-Plugin/dist/jquery.mask.js",
        "angular-1.4.0/angular.js",
-       "common.js",
        "bootstrap/js/bootstrap.js",
        "bootstrap-formhelpers.js",
        "angucomplete-alt-master/angucomplete-alt.js",

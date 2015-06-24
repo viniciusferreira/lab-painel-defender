@@ -62,7 +62,7 @@ app.controller('appPermissionUserController', ['$scope', '$http', '$filter', fun
 			});
 		};
 		usersIds=[];
-		usersIds.push(_user.Id);
+		usersIds.push(_user.id);
 		permissionsIds=[];
 	    angular.forEach(scope.listPermission, function (item) {
 	    	if (item.selected) {

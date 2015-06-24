@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Result Systems<?php if(Session::get('tituloSite')) echo ' | '.utf8_encode(Session::get('tituloSite'));?></title>
+	<title>Result Systems - Sistema de Teste</title>
 	<link rel="stylesheet" href="/assets/css/all.css" rel="stylesheet">
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -20,7 +20,6 @@
 <script>
 	_token='{{ csrf_token() }}';
 	_janela='<?=session_id();?>';
-	_urlReturn='<?=(isset($_SESSION['url_retorno'])?:'');?>';
 </script>
 <div class="container">
 	<div class="loading text-center col-sm-12">
