@@ -21,3 +21,5 @@ Pronto! Poderá ver o a ideia.
 
 ###Observações:
 O middleware VerifyCsrfToken está desativado, eu não testei, porém acredito que se ativá-lo tudo irá funcionar corretamente.
+
+Tem vários lixos na aplicação, pois fiz um exugamento rápido de um projeto que estou utilizando.
